@@ -210,7 +210,7 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 py-cpuinfo==9.0.0
 py3nvml==0.2.7
-pyairports==2.1.1
+pyairports
 pyarrow==16.0.0
 pyarrow-hotfix==0.6
 pybind11==2.6.1
@@ -320,4 +320,3 @@ xmltodict==0.13.0
 xxhash==3.4.1
 yarl==1.9.4
 zipp==3.20.2
-flash-attn==2.6.3

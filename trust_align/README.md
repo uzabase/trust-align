@@ -2,6 +2,11 @@
 
 ## Set up
 
+やってみたら以下だった。(by claude)
+```
+pip install -r requirements.txt --no-build-isolation
+```
+
 ```bash
 conda env create -f environment.yml
 conda activate cite
