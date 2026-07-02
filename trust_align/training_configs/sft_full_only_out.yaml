@@ -9,7 +9,7 @@ attn_implementation: flash_attention_2  #sdpa
 
 # Data training arguments
 dataset_mixer:
-  "/home/shanghong/work/trust-align/data/SFT_Cited_Text": 1.0
+  "sft_dataset": 1.0
 dataset_splits:
   - train
   - test
@@ -20,7 +20,7 @@ truncation_side: "left"
 dataset_text_field: messages
 packing: false
 eval_packing: false
-output_dir: /mnt/data1/shanghong/shared_models/trustalign_llama3_8b_sft # change this
+output_dir: results
 num_train_epochs: 2
 max_steps: -1
 bf16: true

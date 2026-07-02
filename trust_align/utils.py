@@ -103,12 +103,11 @@ def mix_datasets(
     for (ds, frac), ds_config in zip(dataset_mixer.items(), configs):
         fracs.append(frac)
         for split in splits:
-            # try:
-            #     # Try first if dataset on a Hub repo
-            #     dataset = load_dataset(ds, ds_config, split=split)
-            # except DatasetGenerationError:
-            #     # If not, check local dataset
-            dataset = load_from_disk(os.path.join(ds, split), keep_in_memory=keep_in_memory)
+            json_path = os.path.join(ds, f"{split}.json")
+            if os.path.isfile(json_path):
+                dataset = load_dataset("json", data_files=json_path, split="train", keep_in_memory=keep_in_memory)
+            else:
+                dataset = load_from_disk(os.path.join(ds, split), keep_in_memory=keep_in_memory)
 
             # Remove redundant columns to avoid schema conflicts on load
             dataset = dataset.remove_columns([col for col in dataset.column_names if col not in columns_to_keep])
