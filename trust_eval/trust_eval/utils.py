@@ -12,11 +12,14 @@ from transformers import (
     PreTrainedTokenizerFast,
 )
 from vllm import LLM, SamplingParams
-from vllm.transformers_utils.tokenizers import MistralTokenizer
 
 from .logging_config import logger
 
-AnyTokenizer = Union[PreTrainedTokenizer, PreTrainedTokenizerFast, MistralTokenizer]
+try:
+    from vllm.transformers_utils.tokenizers import MistralTokenizer
+    AnyTokenizer = Union[PreTrainedTokenizer, PreTrainedTokenizerFast, MistralTokenizer]
+except ImportError:
+    AnyTokenizer = Union[PreTrainedTokenizer, PreTrainedTokenizerFast]  # type: ignore[misc]
 
 
 def normalize_answer(s: str) -> str:
@@ -112,6 +115,7 @@ def load_vllm(
         gpu_memory_utilization=0.9,
         seed=args.seed,
         max_model_len=args.max_length,
+        tensor_parallel_size=getattr(args, "tensor_parallel_size", 1),
     )
     sampling_params = SamplingParams(
         temperature=args.temperature, top_p=args.top_p, max_tokens=args.max_new_tokens

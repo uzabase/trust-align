@@ -40,7 +40,7 @@ class ResponseGeneratorConfig(BaseConfig):
     # General settings
     yaml_path: str
     model: str = "Qwen/Qwen2.5-3B-Instruct"  # Model to use
-    data_type: Literal["asqa", "qampari", "eli5"] = "eli5"
+    data_type: Literal["asqa", "qampari", "eli5", "expertqa"] = "eli5"
     prompt_file: Optional[str] = None  # Path to the prompt file
     data_file: Optional[str] = None  # Path to the evaluation file
     eval_file: Optional[str] = None  # Output directory for model's output
@@ -89,6 +89,8 @@ class ResponseGeneratorConfig(BaseConfig):
     overwrite: bool = True  # Overwrite existing citations
     external_docs: Optional[str] = None  # Use external documents
 
+    tensor_parallel_size: int = 1  # Number of GPUs for tensor parallelism in vllm
+
     data_generation: bool = False  # default mode is evaluation mode
     sft_model: bool = (
         False  # by default its a pretrained instruct models. Matters because our finetuned models have <think> tokens
@@ -115,7 +117,7 @@ class EvaluationConfig(BaseConfig):
 
     # Eval settings
     yaml_path: str
-    data_type: Literal["asqa", "qampari", "eli5"] = "eli5"
+    data_type: Literal["asqa", "qampari", "eli5", "expertqa"] = "eli5"
     eval_file: Optional[str] = None
     result_path: Optional[str] = (
         None  # output file path for evaluation result (required)
@@ -146,6 +148,7 @@ class EvaluationConfig(BaseConfig):
             "asqa": {"eval_type": "em", "is_qampari": False},
             "qampari": {"eval_type": "em5", "is_qampari": True},
             "eli5": {"eval_type": "cm", "is_qampari": False},
+            "expertqa": {"eval_type": "cm", "is_qampari": False},
         }
 
         if self.data_type in data2eval:
