@@ -233,7 +233,7 @@ pytz==2024.1
 PyYAML==6.0.1
 pyzmq==26.0.3
 RapidFuzz==3.10.0
-ray==2.31.0
+ray==2.56.0
 referencing==0.35.1
 regex==2024.4.28
 requests==2.32.3
